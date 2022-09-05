@@ -9,6 +9,8 @@ const { nanoid } = require('nanoid');
 
 app.use(express.json())
 
+app.get('/' , (req , res) => res.send("Hello World!"))
+
 app.post('/scrapingData', async (req, res) => {
     const { urls } = req.body;
 
