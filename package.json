@@ -1,0 +1,21 @@
+{
+  "name": "expressproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": "16.14.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aliexpress-product-scraper": "^1.0.6",
+    "express": "^4.17.3",
+    "nanoid": "^3.3.4",
+    "puppeteer": "^17.0.0"
+  }
+}
