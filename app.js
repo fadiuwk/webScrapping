@@ -1,7 +1,8 @@
 require('dotenv').config()
 const express = require("express");
 const app = express();
-const port = process.env.PORT
+const port = process.env.PORT || 3000
+
 
 const puppeteer = require('puppeteer');
 const aliExpressScraper = require('aliexpress-product-scraper')
@@ -10,7 +11,7 @@ const { nanoid } = require('nanoid');
 
 app.use(express.json())
 
-app.get('/' , (req , res) => res.send("Hello World!"))
+app.get('/', (req, res) => res.send("Hello World!"))
 
 app.post('/scrapingData', async (req, res) => {
     const { urls } = req.body;
@@ -58,8 +59,4 @@ const scrapProduct = async (urls) => {
     }
 }
 
-// app.listen(port, () => {
-//     console.log("running.....");
-// })
-
-app.listen(process.env.PORT || 3000, () => console.log(`Example app listening on port ${port}!`))
+app.listen(process.env.PORT, () => console.log(`Example app listening on port ${port}!`))
