@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000
-
+let userAgent = require("user-agents");
 
 const puppeteer = require('puppeteer');
 const aliExpressScraper = require('aliexpress-product-scraper')
@@ -28,10 +28,10 @@ const scrapProduct = async (urls) => {
     const page = await browser.newPage();
 
     try {
-
+        await page.setUserAgent(userAgent.toString());
         for (let i = 0; i < urls.length; i++) {
             await page.goto(urls[i], {
-                waitUntil: 'networkidle2', timeout: 0
+                waitUntil: 'networkidle2', timeout: 30000
             });
             const id = Number(urls[i].split('/')[4].split('.')[0]);
             const aliProduct = await aliExpressScraper(id);
@@ -54,8 +54,11 @@ const scrapProduct = async (urls) => {
 
         return aliProducts;
 
-    } catch (error) {
-        console.log('Our Error', error);
+    } catch (e) {
+        res.send({ data: null });
+
+    } finally {
+        await browser.close();
     }
 }
 
