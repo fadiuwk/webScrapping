@@ -51,7 +51,7 @@ const scrapProduct = async (urls) => {
 
             aliProducts.push(aliProduct);
         }
-        browser.close()
+        await browser.close()
 
         return aliProducts;
 
