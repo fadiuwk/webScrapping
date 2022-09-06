@@ -24,7 +24,7 @@ app.post('/scrapingData', async (req, res) => {
 const scrapProduct = async (urls) => {
 
     let aliProducts = [];
-    const browser = await puppeteer.launch({  args: ['--no-sandbox', '--disable-setuid-sandbox']});
+    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     const page = await browser.newPage();
 
     try {
@@ -59,4 +59,4 @@ const scrapProduct = async (urls) => {
     }
 }
 
-app.listen(process.env.PORT, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
