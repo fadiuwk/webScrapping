@@ -24,7 +24,9 @@ app.post('/scrapingData', async (req, res) => {
 const scrapProduct = async (urls) => {
 
     let aliProducts = [];
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        ignoreDefaultArgs: ['--disable-extensions'],
+    });
     const page = await browser.newPage();
 
     try {
