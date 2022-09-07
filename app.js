@@ -2,10 +2,10 @@ require('dotenv').config()
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000
-let userAgent = require("user-agents");
+// let userAgent = require("user-agents");
 
-const puppeteer = require('puppeteer');
-const aliExpressScraper = require('aliexpress-product-scraper')
+// const puppeteer = require('puppeteer');
+// const aliExpressScraper = require('aliexpress-product-scraper')
 const { nanoid } = require('nanoid');
 
 
@@ -29,31 +29,38 @@ const scrapProduct = async (urls) => {
 
     try {
         
-        for (let i = 0; i < urls.length; i++) {
-            await page.setUserAgent(userAgent.toString());
-            await page.goto(urls[i], {
-                waitUntil: 'networkidle2', timeout: 0
-            });
-            const id = Number(urls[i].split('/')[4].split('.')[0]);
-            const aliProduct = await aliExpressScraper(id);
-            aliProduct.sku = nanoid();
-            if (aliProduct.salePrice === undefined) {
-                aliProduct.salePrice = ''
-            }
-            aliProduct.productUrl = urls[i];
+        // for (let i = 0; i < urls.length; i++) {
+        //     await page.setUserAgent(userAgent.toString());
+        //     await page.goto(urls[i], {
+        //         waitUntil: 'networkidle2', timeout: 0
+        //     });
+        //     const id = Number(urls[i].split('/')[4].split('.')[0]);
+        //     const aliProduct = await aliExpressScraper(id);
+        //     aliProduct.sku = nanoid();
+        //     if (aliProduct.salePrice === undefined) {
+        //         aliProduct.salePrice = ''
+        //     }
+        //     aliProduct.productUrl = urls[i];
 
 
-            let [el] = await page.$x('//*[@class="product-dynamic-shipping"]/div/div/div/span/strong/span');
-            let txt = await el?.getProperty('textContent');
-            let shipping = await txt?.jsonValue()
-            let shippingPrice = Number(shipping?.toString().replace(/[^0-9.]/g, ''));
-            aliProduct.shippingPrice = shippingPrice;
+        //     let [el] = await page.$x('//*[@class="product-dynamic-shipping"]/div/div/div/span/strong/span');
+        //     let txt = await el?.getProperty('textContent');
+        //     let shipping = await txt?.jsonValue()
+        //     let shippingPrice = Number(shipping?.toString().replace(/[^0-9.]/g, ''));
+        //     aliProduct.shippingPrice = shippingPrice;
 
-            aliProducts.push(aliProduct);
-        }
+        //     aliProducts.push(aliProduct);
+        // }
+        let [el] = await page.$x('//*[@class="product-dynamic-shipping"]/div/div/div/span/strong/span');
+        let txt = await el?.getProperty('textContent');
+        let shipping = await txt?.jsonValue()
+        let shippingPrice = Number(shipping?.toString().replace(/[^0-9.]/g, ''));
+        // aliProduct.shippingPrice = shippingPrice;
+
+        // aliProducts.push(aliProduct);
         await browser.close()
 
-        return aliProducts;
+        return shippingPrice;
 
     } catch (e) {
         res.send({ data: null });
