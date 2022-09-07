@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000
-let userAgent = require("user-agents");
+// let userAgent = require("user-agents");
 
 const puppeteer = require('puppeteer');
 const aliExpressScraper = require('aliexpress-product-scraper')
@@ -24,15 +24,15 @@ app.post('/scrapingData', async (req, res) => {
 const scrapProduct = async (urls) => {
 
     let aliProducts = [];
-    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] , ignoreDefaultArgs: ['--disable-extensions']});
+    const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     const page = await browser.newPage();
 
     try {
         
         for (let i = 0; i < urls.length; i++) {
-            await page.setUserAgent(userAgent.toString());
+            // await page.setUserAgent(userAgent.toString());
             await page.goto(urls[i], {
-                waitUntil: 'networkidle2', timeout: 30000
+                waitUntil: 'networkidle2', timeout: 0
             });
             const id = Number(urls[i].split('/')[4].split('.')[0]);
             const aliProduct = await aliExpressScraper(id);
