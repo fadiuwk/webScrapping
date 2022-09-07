@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 3000
+const port = process.env.PORT
 // let userAgent = require("user-agents");
 
 // const puppeteer = require('puppeteer');
@@ -14,9 +14,9 @@ app.use(express.json())
 app.get('/', (req, res) => res.send("Hello World!"))
 
 app.post('/scrapingData', async (req, res) => {
-    const { urls } = req.body;
+    // const { urls } = req.body;
 
-    let result = await scrapProduct(urls)
+    let result = await scrapProduct()
 
     res.json({ message: "Done", result })
 })
